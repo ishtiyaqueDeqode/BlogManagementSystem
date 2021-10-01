@@ -71,6 +71,15 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert post.published_at
   end
 
+  test 'delete_main_image_attachment' do
+    post = Fabricate(:post, user: @user)
+
+    delete delete_main_image_attachment_post_path(post.main_image.id), headers: { 'HTTP_REFERER' => post_path(post) }
+
+    assert post.reload.main_image.signed_id == nil
+    assert_redirected_to post_path(post)
+  end
+
   private
 
   def valid_image_file

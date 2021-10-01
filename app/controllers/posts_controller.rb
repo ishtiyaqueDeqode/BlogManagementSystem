@@ -61,8 +61,4 @@ class PostsController < ApplicationController
     params.require(:post)
           .permit(:title, :description, :main_image, :remove_main_image, :tag_list)
   end
-
-  def authorize_user!
-    authorize post
-  end
 end

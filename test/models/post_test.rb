@@ -29,4 +29,12 @@ class PostTest < ActiveSupport::TestCase
     assert Post.own_posts(user1).pluck(:id) == [post1.id, post2.id]
     assert Post.own_posts(user2).pluck(:id) == [post3.id, post4.id]
   end
+
+  test 'write_published_at when status is updated' do
+    post = Fabricate(:post, status: 'draft', published_at: nil)
+
+    post.update(status: 'published')
+
+    assert post.reload.published_at
+  end
 end
