@@ -53,7 +53,10 @@ class PostsController < ApplicationController
   private
 
   def get_all_posts
-    posts = if params[:own_posts]
+    posts = if params[:query]
+              posts_from_algolia = Post.search(params[:query])
+              Post.where(id: posts_from_algolia.pluck(:id))
+            elsif params[:own_posts]
               current_user.posts.includes(:user, :tags, :rich_text_description)
             else
               Post.includes(:user, :tags, :rich_text_description).published

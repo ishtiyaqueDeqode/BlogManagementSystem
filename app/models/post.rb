@@ -1,4 +1,11 @@
 class Post < ApplicationRecord
+  include AlgoliaSearch
+
+  algoliasearch per_environment: true, if: :indexable? do
+    attributes :title, :tags
+
+    searchableAttributes %w[title tags]
+  end
 
   acts_as_taggable_on :tags
 
@@ -22,5 +29,9 @@ class Post < ApplicationRecord
     return if status_in_database.eql?('published')
 
     self.published_at = Time.now
+  end
+
+  def indexable?
+    published_at.present?
   end
 end

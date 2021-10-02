@@ -34,6 +34,7 @@ gem 'decent_exposure', '~> 3.0'
 gem "pundit"
 gem 'active_storage_validations'
 gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
+gem 'algoliasearch-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
